@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   IRCServer.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:43:11 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/06/26 19:29:03 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:43:51 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRCSERVER_HPP
 #define IRCSERVER_HPP
-#define MAX_USERS 1024
+#define MAX_USERS 8
 #define MAXMSGSIZE 512
 #define HOST_SIZE 128
 #define DEFAULT_PORT 6667
@@ -63,7 +63,7 @@ private:
 	void processMessage(std::string buff, int fd);
 	std::string getHostname() const;
 	void disconnect(const int fd);
-	bool checkLogin(const int fd);
+	bool checkLogin(const std::string cmd, const int fd);
 
 public:
 	IRCServer(const uint16_t port, const std::string password);

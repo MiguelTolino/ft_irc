@@ -90,10 +90,17 @@ void IRCServer::acceptConnection()
 				throwError("accept() failed");
 			}
 		}
-
+		/* this blocks new connections but it does not reset the fds available, so after disconnecting
+		no new connections will be available */
+		if (_nfds >= MAX_USERS)
+		{
+			logg(LOG_ERROR) << "Max connections reached\n";
+			break;
+		}
 		logg(LOG_INFO) << "New incoming connection - [" << ROSE << new_sd << RESET << "]\n";
 		for (int i = 0; i <= _nfds; i++)
 		{
+			
 			if (_pollFds[i].fd <= 0)
 			{
 				_pollFds[i].fd = new_sd;
@@ -196,10 +203,11 @@ void IRCServer::processMessage(std::string buff, int fd)
 		Message msg(*it);
 		_cmdHandler->setMessage(msg);
 		std::cout << _cmdHandler->getMessage();
-		if (msg.getCmd() == "PASS" || this->checkLogin(fd))
+		if (!checkLogin(msg.getCmd(), fd))
 		{
-			_cmdHandler->executeCmd(replies);
+			break;
 		}
+		_cmdHandler->executeCmd(replies);
 		for (std::list<Reply>::iterator rp = replies.begin(); rp != replies.end(); rp++)
 		{
 			std::set<int> targets = (*rp).getTargets();
@@ -211,11 +219,6 @@ void IRCServer::processMessage(std::string buff, int fd)
 			}
 		}
 		replies.clear();
-		if (!checkLogin(fd))
-		{
-			this->_cmdHandler->error("Unable to Authenticate", fd);
-			this->disconnect(fd);
-		}
 	}
 }
 
@@ -240,11 +243,13 @@ std::string IRCServer::getHostname() const
 	return std::string(this->_hostname);
 }
 
-bool IRCServer::checkLogin(const int fd)
+bool IRCServer::checkLogin(const std::string cmd, const int fd)
 {
-	if (this->_listUsers->getUser(fd)->isLogged())
+	if (cmd == "NICK" && !this->_listUsers->getUser(fd)->isLogged())
 	{
-		return true;
+		this->_cmdHandler->error("Unable to Authenticate", fd);
+		this->disconnect(fd);
+		return false;
 	}
-	return false;
+	return true;
 }
