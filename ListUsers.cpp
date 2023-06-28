@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ListUsers.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:42:54 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/06/13 19:42:23 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:30:08 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 ListUsers::ListUsers(/* args */)
 	: _usersByNick(), _usersByFd()
 {
+	_userCounter = 0;
 }
 
 ListUsers::~ListUsers()
@@ -29,11 +30,12 @@ ListUsers::~ListUsers()
 
 bool ListUsers::addUser(User *user)
 {
-	if (_usersByNick.find(user->getNick()) == _usersByNick.end())
+	if (_usersByNick.find(user->getNick()) == _usersByNick.end() && _userCounter < MAXUSERS)
 	{
 		_usersByNick.insert(std::pair<std::string, User *>(user->getNick(), user));
 		std::cout << "nick " << user->getNick() << std::endl;
 		std::cout << "user " << _usersByNick[user->getNick()]->getUsername() << std::endl;
+		_userCounter++;
 		return true;
 	}
 	return false;

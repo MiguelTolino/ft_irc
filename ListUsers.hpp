@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ListUsers.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:42:51 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/06/05 16:14:20 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:29:43 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_USERS_HPP
 #define LIST_USERS_HPP
 #include "lib2.h"
+#define MAXUSERS 512
 
 class User;
 
@@ -23,6 +24,7 @@ private:
 	std::map<size_t, User *> _usersByFd;
 	std::set<User *> _listOfUsers;
 	bool addUser(User *user);
+	int _userCounter;
 
 public:
 	typedef std::map<std::string, User *>::iterator iterator;
