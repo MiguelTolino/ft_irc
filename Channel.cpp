@@ -6,7 +6,7 @@
 /*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:43:58 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/10 10:20:17 by mvillaes         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:30:49 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Channel::~Channel()
 
 const std::string &Channel::getName() const
 {
-	return "#" + _name;
+	return _name;
 }
 
 bool Channel::setName(const std::string &name)
