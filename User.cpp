@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:42:01 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/04 18:05:02 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:57:18 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ bool User::setNick(const std::string &nick)
 		}
 	}
 	if (!isForbbiten)
-		_nick = nick;
+		// nick limitation
+		_nick = nick.substr(0,16);
 
 	return isForbbiten;
 }

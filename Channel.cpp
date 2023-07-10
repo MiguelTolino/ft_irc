@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:43:58 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/03 16:24:05 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:04:15 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void Channel::removeUser(User *user)
 
 void Channel::setTopic(const std::string &topic)
 {
-	_topic = topic;
+	// limit topic char len
+	_topic = topic.substr(0,510);
 	logg(LOG_INFO) << "Channel: " << ORANGE << this->_name << RESET << " | New Topic: " << ORANGE << this->_topic << "\n"
 				   << RESET;
 }
@@ -278,7 +279,8 @@ bool Channel::setMode(std::string mode)
 				users += std::string("@");
 			users += (*it)->getNick();
 		}
-		return users;
+		// limit character leng for returned users
+		return users.substr(0,510);
 	}
 
 	void Channel::inviteUser(User * user)
