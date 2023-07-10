@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvillaes <mvillaes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 12:43:58 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/03 16:24:05 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:20:17 by mvillaes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ Channel::~Channel()
 
 const std::string &Channel::getName() const
 {
-	return _name;
+	return "#" + _name;
 }
 
 bool Channel::setName(const std::string &name)
@@ -278,7 +278,7 @@ bool Channel::setMode(std::string mode)
 				users += std::string("@");
 			users += (*it)->getNick();
 		}
-		return users;
+		return users + "\n/NAMES list";
 	}
 
 	void Channel::inviteUser(User * user)
